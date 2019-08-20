@@ -1,5 +1,4 @@
 import React from 'react';
-import moment from 'moment';
 import Loader from 'react-loader-spinner';
 import { axiosWithAuth } from '../utils/axiosWithAuth';
 import User from './User'
@@ -25,6 +24,16 @@ class UserMap extends React.Component {
       .catch(err => console.log(err.response));
   };
 
+    deleteUser = (id) => {
+        axiosWithAuth()
+        .delete(`http://localhost:5000/api/friends/${id}`)
+        .then(res => {
+        console.log(res)
+        })
+        .catch(err => console.log(err));
+        window.location.reload();
+    }
+
   render() {
     return (
         <div className='user-list'>
@@ -34,7 +43,7 @@ class UserMap extends React.Component {
                     <p>Loading Data</p>
                 </div>
                 )}
-            {this.state.userList.map(user => <User key={user.id} user={user} />)}
+            {this.state.userList.map(user => <User key={user.id} user={user} deleteUser={this.deleteUser} />)}
         </div>
     );
   }
