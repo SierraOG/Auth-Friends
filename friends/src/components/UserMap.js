@@ -6,7 +6,8 @@ import User from './User'
 
 class UserMap extends React.Component {
   state = {
-    userList: []
+    userList: [], 
+    fetchingData: false,
   };
 
   componentDidMount() {
@@ -14,11 +15,12 @@ class UserMap extends React.Component {
   }
 
   getData = () => {
+    this.setState({fetchingData:true})
     axiosWithAuth()
       .get('http://localhost:5000/api/friends')
       .then(res => {
           console.log(res.data)
-          this.setState({userList: res.data})
+          this.setState({userList: res.data, fetchingData:false})
       })
       .catch(err => console.log(err.response));
   };
@@ -26,18 +28,14 @@ class UserMap extends React.Component {
   render() {
     return (
         <div className='user-list'>
+                {this.state.fetchingData && (
+                <div className="key spinner">
+                    <Loader type="Puff" color="#204963" height="60" width="60" />
+                    <p>Loading Data</p>
+                </div>
+                )}
             {this.state.userList.map(user => <User key={user.id} user={user} />)}
         </div>
-        // {this.props.fetchingData && (
-        //   <div className="key spinner">
-        //     <Loader type="Puff" color="#204963" height="60" width="60" />
-        //     <p>Loading Data</p>
-        //   </div>
-        // )}
-        // {userList.length > 0 && (
-        //         {userList.map(price => (
-                
-        // ))}
     );
   }
 }
