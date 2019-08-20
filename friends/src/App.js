@@ -10,19 +10,17 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <ul>
-          <li>
+          <button>
             <Link to="/login">Login</Link>
-          </li>
-          <li>
-            <Link to="/register">Register</Link>
-          </li>
-          <li>
-            <Link to="/protected">Protected Page</Link>
-          </li>
-        </ul>
+          </button>
+          <button>
+            <Link to="/register">Register New Friends</Link>
+          </button>
+          <button>
+            <Link to="/protected">Friends List</Link>
+          </button>
         <Route path="/login" component={Login} />
-        <Route path="/register" component={Register} />
+        <PrivateRoute path="/register" component={Register} />
         <PrivateRoute exact path="/protected" component={UserMap} />
         {/* <PrivateRoute path="/anotherRoute" component={SomeOtherComponent} /> */}
       </div>
